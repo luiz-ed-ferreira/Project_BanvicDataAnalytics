@@ -10,7 +10,11 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 
 In Progress  [developing]
 
-- [x] TBD
+- [ ] KPIs + business questions
+- [ ] EDA + insights
+- [ ] Dashboard mockup
+- [ ] Dashboard development
+- [ ] Business rules documentation
 
 > Attention! Consult the main.py file for more information about the project questions.
 
