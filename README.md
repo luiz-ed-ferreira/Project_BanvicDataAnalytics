@@ -6,6 +6,20 @@ A project developed as part of the final assessment process for Indicium AI's Da
 
 Attention! Please note that this notebook is partially written in Brazilian Portuguese, as it was developed as a test project to evaluate my skills as part of the Indicium AI's Data Analytics certification.
 
+### Criterion
+
+> 1. Business	             - Understand BanVic’s problem and address the commercial team's needs
+
+> 2. Analytical capability - Select KPIs and visuals that drive actual decisions, not just create pretty charts
+
+> 3. EDA	                 - Conduct an organized exploration, justify analyses, and document insights
+
+> 4. Dashboard	           - Ensure effective visualization, UX, storytelling, data validation, and documentation
+
+> 5. Recommendations	     - Translate insights into concrete actions, including demonstrating the value of a data-driven approach to Camila
+
+> 6. Presentation	         - Tell the complete story: problem → data → analysis → discovery → decision
+
 ### Status & improvements
 
 In Progress  [developing]
@@ -15,8 +29,7 @@ In Progress  [developing]
 - [ ] Dashboard mockup
 - [ ] Dashboard development
 - [ ] Business rules documentation
-
-> Attention! Consult the main.py file for more information about the project questions.
+- [ ] Final presentation
 
 ### Prerequisites & used softwares
 
