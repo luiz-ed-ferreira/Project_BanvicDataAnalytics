@@ -8,17 +8,12 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 
 ### Criterion
 
-> 1. Business	             - Understand BanVic’s problem and address the commercial team's needs
-
-> 2. Analytical capability - Select KPIs and visuals that drive actual decisions, not just create pretty charts
-
-> 3. EDA	                 - Conduct an organized exploration, justify analyses, and document insights
-
-> 4. Dashboard	           - Ensure effective visualization, UX, storytelling, data validation, and documentation
-
-> 5. Recommendations	     - Translate insights into concrete actions, including demonstrating the value of a data-driven approach to Camila
-
-> 6. Presentation	         - Tell the complete story: problem → data → analysis → discovery → decision
+- Business: understand BanVic’s problem and address the commercial team's needs
+- Analytical capability: select KPIs and visuals that drive actual decisions, not just create pretty charts
+- EDA: conduct an organized exploration, justify analyses, and document insights
+- Dashboard: ensure effective visualization, UX, storytelling, data validation, and documentation
+- Recommendations: translate insights into concrete actions, including demonstrating the value of a data-driven
+- Presentation: complete story: problem → data → analysis → discovery → decision
 
 ### Status & improvements
 
@@ -35,6 +30,8 @@ In Progress  [developing]
 
 - WSL Linux/Ubuntu for Windows 11 System
 - Python version 3.12.3
+- PostgreSQL version 18.6
+- Power BI version 2.157.879
 
 > Attention! Consult the requirements.txt file for more information about python libraries used.
 
