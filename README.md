@@ -19,13 +19,13 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 
 In Progress  [developing]
 
-- [ ] Data quality + preparation
-- [ ] Data loading in PostgreSQL
+- [x] Data quality + preparation
 - [ ] EDA + insights
+- [ ] Data loading in PostgreSQL
 - [ ] KPIs + business questions
 - [ ] Dashboard mockup
 - [ ] Dashboard development
-- [ ] Business rules documentation / recomemndations
+- [ ] Business rules documentation / recommendations
 - [ ] Final presentation
 
 ### Project structure
@@ -39,11 +39,11 @@ In Progress  [developing]
 <br>   ├── Transformation
 <br>   └── Business Rules
 <br>   │
-<br> POSTGRESQL
-<br>   │
 <br> EDA
 <br>   │
 <br> BUSINESS INSIGHTS
+<br>   │
+<br> POSTGRESQL
 <br>   │
 <br> KPIs
 <br>   │
