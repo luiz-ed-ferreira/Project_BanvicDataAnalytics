@@ -19,12 +19,41 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 
 In Progress  [developing]
 
-- [ ] KPIs + business questions
+- [ ] Data quality + preparation
+- [ ] Data loading in PostgreSQL
 - [ ] EDA + insights
+- [ ] KPIs + business questions
 - [ ] Dashboard mockup
 - [ ] Dashboard development
-- [ ] Business rules documentation
+- [ ] Business rules documentation / recomemndations
 - [ ] Final presentation
+
+### Project structure
+
+RAW DATA (ORIGINAL CSVs files)
+   │
+DATA QUALITY & PREPARATION
+   │
+   ├── Validation
+   ├── Cleaning
+   ├── Transformation
+   └── Business Rules
+   │
+POSTGRESQL
+   │
+EDA
+   │
+BUSINESS INSIGHTS
+   │
+KPIs
+   │
+MOCKUP
+   │
+POWER BI
+   │
+RECOMMENDATIONS
+   │
+PRESENTATION
 
 ### Prerequisites & used softwares
 
