@@ -83,6 +83,61 @@ def inspect_data_types(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
 
 #----------------------------------------------------------------------------
 
+#Função para identificar valores nulos em todas as tabelas
+def inspect_missing_values(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
+    """Identifica valores nulos em todas as tabelas. 
+    Retorna um dicionário com DataFrames contendo a contagem e a porcentagem de valores nulos por coluna para cada tabela."""
+
+    missing_values: dict[str, pd.DataFrame] = {}
+
+    for dataset_name, df in datasets.items():
+
+        missing_count: pd.Series = df.isna().sum()
+
+        missing_percentage: pd.Series = (
+            df.isna().mean() * 100
+        )
+
+        result: pd.DataFrame = pd.DataFrame({
+            "column": df.columns,
+            "missing_count": missing_count.values,
+            "missing_percentage": missing_percentage.values
+        })
+
+        result = result.sort_values(
+            by="missing_count",
+            ascending=False
+        ).reset_index(drop=True)
+
+        missing_values[dataset_name] = result
+
+    return missing_values
+
+#----------------------------------------------------------------------------
+
+#Função para salvar os DataFrames tratados em arquivos CSV
+def save_csv_files(datasets: dict[str, pd.DataFrame],output_path: str) -> None:
+    """
+        Salva os DataFrames tratados em arquivos CSV.
+        O nome de cada arquivo será baseado na chave correspondente
+        do dicionário de datasets.
+    """
+
+    os.makedirs(output_path, exist_ok=True)
+
+    for dataset_name, df in datasets.items():
+        file_path: str = os.path.join(
+            output_path,
+            f"{dataset_name}.csv"
+        )
+
+        df.to_csv(
+            file_path,
+            index=False
+        )
+
+#----------------------------------------------------------------------------
+
 #Função para identificar colunas que são identificadores (id), cpfs/cnpjs, etc., que devem ser tratados como TEXT
 def id_type_column(column_name: str) -> bool:
     """ Verifica se a coluna representa um identificador (id), cpfs/cnpjs, etc. para ser tratada separadamente. """

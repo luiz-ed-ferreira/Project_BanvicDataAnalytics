@@ -4,8 +4,8 @@ import json
 #----------------------------------------------------------------------------
 
 #Definindo o diretório onde os arquivos CSVs estão localizados, onde serão salvos e o nome do arquivo de saída do schema
-OLD_DATASER_DIR = "Old_Dataset"
-NEW_DATASER_DIR = "New_Dataset"
+OLD_DATASET_DIR = "Old_Dataset"
+NEW_DATASET_DIR = "New_Dataset"
 OUTPUT_FILE = "Schema/schema_banvic.sql"
 
 #----------------------------------------------------------------------------
