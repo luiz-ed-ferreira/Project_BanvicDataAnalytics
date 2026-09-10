@@ -30,30 +30,30 @@ In Progress  [developing]
 
 ### Project structure
 
-RAW DATA (ORIGINAL CSVs files)
-   │
-DATA QUALITY & PREPARATION
-   │
-   ├── Validation
-   ├── Cleaning
-   ├── Transformation
-   └── Business Rules
-   │
-POSTGRESQL
-   │
-EDA
-   │
-BUSINESS INSIGHTS
-   │
-KPIs
-   │
-MOCKUP
-   │
-POWER BI
-   │
-RECOMMENDATIONS
-   │
-PRESENTATION
+<br> RAW DATA (ORIGINAL CSVs files)
+<br>   │
+<br> DATA QUALITY & PREPARATION
+<br>   │
+<br>   ├── Validation
+<br>   ├── Cleaning
+<br>   ├── Transformation
+<br>   └── Business Rules
+<br>   │
+<br> POSTGRESQL
+<br>   │
+<br> EDA
+<br>   │
+<br> BUSINESS INSIGHTS
+<br>   │
+<br> KPIs
+<br>   │
+<br> MOCKUP
+<br>   │
+<br> POWER BI
+<br>   │
+<br> RECOMMENDATIONS
+<br>   │
+<br> PRESENTATION
 
 ### Prerequisites & used softwares
 
