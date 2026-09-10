@@ -1,4 +1,4 @@
--- Schema gerado automaticamente
+-- Schema gerado automaticamente a partir do arquivo CSVs tratados na pasta "New_Dataset"
 
 CREATE TABLE "agencias" (
     "cod_agencia" TEXT,

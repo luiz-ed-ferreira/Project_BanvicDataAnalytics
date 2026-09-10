@@ -277,7 +277,7 @@ def generated_schema(data_path: str, output_file: str) -> None:
 
     with open(output_file, "w", encoding="utf-8") as sqlfile:
         sqlfile.write(
-            "-- Schema gerado automaticamente\n\n"
+            "-- Schema gerado automaticamente a partir do arquivo CSVs tratados na pasta \"New_Dataset\"\n\n"
         )
         sqlfile.write(
             "\n".join(sql_statements)
