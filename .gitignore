@@ -1,6 +1,9 @@
 #Dataset
 /Dataset
 
+#Config DB
+/Config
+
 #Venv
 /.venv_banvic
 
