@@ -7,18 +7,6 @@ from datetime import datetime
 
 #----------------------------------------------------------------------------
 
-#Chamando as variaveis globais
-import sys
-sys.path.append("../")
-
-from Global.variables import (
-    OLD_DATASER_DIR,
-    NEW_DATASER_DIR,
-    OUTPUT_FILE,
-    DB_CONFIG
-)
-#----------------------------------------------------------------------------
-
 #Função para mostrar as colunas dos arquivos CSVs em uma pasta especifica
 def show_columns(data_path: str) -> None:
     """ Lê todos os arquivos CSVs de uma pasta e apresenta as colunas existentes em cada arquivo. """
@@ -51,8 +39,10 @@ def show_columns(data_path: str) -> None:
 
 #----------------------------------------------------------------------------
 
-def load_old_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
-    """Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os DataFrames correspondentes. """
+#Função para carregar os arquivos CSVs para identificar a quantidade de linhas e colunas
+def load_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
+    """Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os DataFrames correspondentes.
+    Auxilia na identificação da quantidade de linhas e colunas de cada arquivo CSV. """
 
     datasets: dict[str, pd.DataFrame] = {}
 
@@ -74,7 +64,24 @@ def load_old_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
         datasets[dataset_name] = pd.read_csv(file_path)
 
     return datasets
-#------------------------------
+
+#----------------------------------------------------------------------------
+
+#Função para inspecionar os tipos de dados de todas as tabelas carregadas
+def inspect_data_types(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
+    """ Inspeciona os tipos de dados de todas as tabelas carregadas. """
+
+    data_types: dict[str, pd.DataFrame] = {}
+
+    for dataset_name, df in datasets.items():
+        data_types[dataset_name] = pd.DataFrame({
+            "column": df.columns,
+            "data_type": df.dtypes.astype(str).values
+        })
+
+    return data_types
+
+#----------------------------------------------------------------------------
 
 #Função para identificar colunas que são identificadores (id), cpfs/cnpjs, etc., que devem ser tratados como TEXT
 def id_type_column(column_name: str) -> bool:
@@ -173,18 +180,18 @@ def created_column_name(column: str) -> str:
 #----------------------------------------------------------------------------
 
 #Função para gerar o schema SQL a partir dos arquivos CSVs
-def generated_schema() -> None:
+def generated_schema(data_path: str, output_file: str) -> None:
     """ Gera o schema SQL a partir dos arquivos CSVs no diretório especificado. """
 
     sql_statements = []
-    files = sorted(os.listdir(OLD_DATASER_DIR))
+    files = sorted(os.listdir(data_path))
 
     for filename in files:
         #Apenas selecionar arquivos .csv no diretório especificado
         if not filename.lower().endswith(".csv"):
             continue
 
-        filepath = os.path.join(OLD_DATASER_DIR, filename)
+        filepath = os.path.join(data_path, filename)
         table_name = created_table_name(filename)
     
         print(f"Processando: {filename}")
@@ -213,7 +220,7 @@ def generated_schema() -> None:
 
             sql_statements.append(create_table)
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as sqlfile:
+    with open(output_file, "w", encoding="utf-8") as sqlfile:
         sqlfile.write(
             "-- Schema gerado automaticamente\n\n"
         )
@@ -326,19 +333,19 @@ def load_csv_to_postgres(connection, filepath: str):
 #----------------------------------------------------------------------------
 
 #Função para chamar todos os arquivos CSVs e a partir da função load_csv_to_postgres inserir no PostgreSQL
-def load_all_csvs() -> None:
+def load_all_csvs_to_postgres(data_path: str, db_config: dict) -> None:
     """ Carrega todos os arquivos CSV do diretório NEW_DATASER_DIR para o banco de dados PostgreSQL. """
 
-    connection = psycopg2.connect(**DB_CONFIG)
+    connection = psycopg2.connect(**db_config)
 
     #Busca apenas arquivos CSV no diretório NEW_DATASER_DIR e chama a função load_csv_to_postgres para cada arquivo encontrado
     try:
-        files = sorted(os.listdir(NEW_DATASER_DIR))
+        files = sorted(os.listdir(data_path))
         for filename in files:
             if not filename.lower().endswith(".csv"):
                 continue
             filepath = os.path.join(
-                NEW_DATASER_DIR,
+                data_path,
                 filename
             )
             load_csv_to_postgres(
