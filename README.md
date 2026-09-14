@@ -28,6 +28,16 @@ In Progress  [developing]
 - [ ] Business rules documentation / recommendations
 - [ ] Final presentation
 
+### EDA observations
+
+> ⚠️ Data Anomaly — Account 528
+
+During the Customers × Accounts analysis, we identified 998 customers and 999 accounts. A referential integrity check revealed that only account 528 references a non-existent customer (cod_cliente = 528).
+
+The account has a valid agency, assigned employee, and multiple transactions, confirming that it is an active record despite the missing customer reference.
+
+Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly.
+
 ### Project structure
 
 <br> RAW DATA (ORIGINAL CSVs files)

@@ -6,7 +6,7 @@ CREATE TABLE "agencias" (
     "endereco" TEXT,
     "cidade" TEXT,
     "uf" TEXT,
-    "data_abertura" DATE,
+    "data_abertura" TEXT,
     "tipo_agencia" TEXT
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE "clientes" (
     "tipo_cliente" TEXT,
     "data_inclusao" TEXT,
     "cpfcnpj" TEXT,
-    "data_nascimento" DATE,
+    "data_nascimento" TEXT,
     "endereco" TEXT,
     "cep" TEXT
 );
@@ -34,7 +34,7 @@ CREATE TABLE "colaboradores" (
     "ultimo_nome" TEXT,
     "email" TEXT,
     "cpf" TEXT,
-    "data_nascimento" DATE,
+    "data_nascimento" TEXT,
     "endereco" TEXT,
     "cep" TEXT
 );
