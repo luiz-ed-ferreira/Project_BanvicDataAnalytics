@@ -50,3 +50,24 @@ def analyze_customer_accounts(customers_df: pd.DataFrame, accounts_df: pd.DataFr
     }
 
 #----------------------------------------------------------------------------
+
+#Função para identificar quais contas bancárias são anomalas com base em uma lista de identificadores fornecida.
+def flag_anomalous_accounts(accounts_df: pd.DataFrame,anomalous_account_ids: list[int]) -> pd.DataFrame:
+    """
+    Adiciona uma flag identificando contas classificadas como anômalas.
+
+    Retorna
+    -------
+    pd.DataFrame
+        DataFrame contendo a coluna 'anomalia', com True para contas anômalas e False para as demais.
+    """
+
+    accounts_df = accounts_df.copy()
+
+    accounts_df["anomalia"] = (
+        accounts_df["num_conta"].isin(anomalous_account_ids)
+    )
+
+    return accounts_df
+
+#----------------------------------------------------------------------------

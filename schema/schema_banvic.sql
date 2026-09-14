@@ -6,7 +6,7 @@ CREATE TABLE "agencias" (
     "endereco" TEXT,
     "cidade" TEXT,
     "uf" TEXT,
-    "data_abertura" TEXT,
+    "data_abertura" TIMESTAMP,
     "tipo_agencia" TEXT
 );
 
@@ -16,9 +16,9 @@ CREATE TABLE "clientes" (
     "ultimo_nome" TEXT,
     "email" TEXT,
     "tipo_cliente" TEXT,
-    "data_inclusao" TEXT,
+    "data_inclusao" TIMESTAMP,
     "cpfcnpj" TEXT,
-    "data_nascimento" TEXT,
+    "data_nascimento" TIMESTAMP,
     "endereco" TEXT,
     "cep" TEXT
 );
@@ -34,7 +34,7 @@ CREATE TABLE "colaboradores" (
     "ultimo_nome" TEXT,
     "email" TEXT,
     "cpf" TEXT,
-    "data_nascimento" TEXT,
+    "data_nascimento" TIMESTAMP,
     "endereco" TEXT,
     "cep" TEXT
 );
@@ -45,17 +45,18 @@ CREATE TABLE "contas" (
     "cod_agencia" TEXT,
     "cod_colaborador" TEXT,
     "tipo_conta" TEXT,
-    "data_abertura" TEXT,
+    "data_abertura" TIMESTAMP,
     "saldo_total" NUMERIC,
     "saldo_disponivel" NUMERIC,
-    "data_ultimo_lancamento" TEXT
+    "data_ultimo_lancamento" TIMESTAMP,
+    "anomalia" TEXT
 );
 
 CREATE TABLE "propostas_credito" (
     "cod_proposta" TEXT,
     "cod_cliente" TEXT,
     "cod_colaborador" TEXT,
-    "data_entrada_proposta" TEXT,
+    "data_entrada_proposta" TIMESTAMP,
     "taxa_juros_mensal" NUMERIC,
     "valor_proposta" NUMERIC,
     "valor_financiamento" NUMERIC,
@@ -69,7 +70,7 @@ CREATE TABLE "propostas_credito" (
 CREATE TABLE "transacoes" (
     "cod_transacao" TEXT,
     "num_conta" TEXT,
-    "data_transacao" TEXT,
+    "data_transacao" TIMESTAMP,
     "nome_transacao" TEXT,
     "valor_transacao" NUMERIC
 );

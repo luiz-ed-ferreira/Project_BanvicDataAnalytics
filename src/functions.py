@@ -254,21 +254,41 @@ def infer_type(column_name: str, values: list) -> str:
     except ValueError:
         pass
 
-    #DATE/TIMESTAMP
-    date_formats = [
-        "%Y-%m-%d",
-        "%Y-%m-%d %H:%M:%S",
-        "%Y-%m-%dT%H:%M:%S"
-    ]
-    for date_format in date_formats:
+    #DATE / TIMESTAMP
+    parsed_values: list[datetime] = []
+
+    for value in values:
+        normalized_value: str = value.strip()
+
+        #Trata valores terminados em UTC.
+        if normalized_value.endswith(" UTC"):
+            normalized_value = normalized_value[:-4] + "+00:00"
+
         try:
-            for value in values:
-                datetime.strptime(value, date_format)
-            if "H" in date_format:
-                return "TIMESTAMP"
-            return "DATE"
+            parsed_value: datetime = datetime.fromisoformat(
+                normalized_value
+            )
+            parsed_values.append(parsed_value)
+
         except ValueError:
-            continue
+            parsed_values = []
+            break
+
+    if parsed_values:
+        has_time: bool = any(
+            value.hour != 0
+            or value.minute != 0
+            or value.second != 0
+            or value.microsecond != 0
+            or value.tzinfo is not None
+            for value in parsed_values
+        )
+
+        if has_time:
+            return "TIMESTAMP"
+
+        return "DATE"
+
     return "TEXT"
 
 #----------------------------------------------------------------------------
