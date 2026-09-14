@@ -1,6 +1,5 @@
 #Importando as bibliotecas necessárias
 import pandas as pd
-from datetime import datetime
 
 #----------------------------------------------------------------------------
 
@@ -8,7 +7,7 @@ from datetime import datetime
 def inspect_credit_proposals(df: pd.DataFrame) -> dict[str, int]:
     """ Identifica possíveis inconsistências nos valores das propostas de crédito do dataset 'propostas_credito.csv'. """
 
-    #As colunas a seguir foram prdefinidas para analise conforme inspeção inicial no dataset de origem: propostas_credito.csv
+    #As colunas a seguir foram definidas para analise conforme inspeção inicial no dataset de origem: propostas_credito.csv
     validation_summary: dict[str, int] = {
         "entry_greater_than_proposal": int(
             (df["valor_entrada"] > df["valor_proposta"]).sum()
@@ -40,7 +39,7 @@ def inspect_credit_proposals(df: pd.DataFrame) -> dict[str, int]:
 def inspect_transaction_values(df: pd.DataFrame) -> dict[str, int]:
     """ Identifica possíveis inconsistências nos valores das transações do dataset 'transacoes.csv'. """
 
-    #As colunas a seguir foram prdefinidas para analise conforme inspeção inicial no dataset de origem: transacoes.csv
+    #As colunas a seguir foram definidas para analise conforme inspeção inicial no dataset de origem: transacoes.csv
     validation_summary: dict[str, int] = {
         "negative_values": int(
             (df["valor_transacao"] < 0).sum()
