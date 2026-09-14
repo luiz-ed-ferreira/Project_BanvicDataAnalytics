@@ -41,8 +41,10 @@ def show_columns(data_path: str) -> None:
 
 #Função para carregar os arquivos CSVs para identificar a quantidade de linhas e colunas
 def load_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
-    """Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os DataFrames correspondentes.
-    Auxilia na identificação da quantidade de linhas e colunas de cada arquivo CSV. """
+    """
+        Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os DataFrames correspondentes.
+        Auxilia na identificação da quantidade de linhas e colunas de cada arquivo CSV. 
+    """
 
     datasets: dict[str, pd.DataFrame] = {}
 
@@ -85,8 +87,10 @@ def inspect_data_types(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
 
 #Função para identificar valores nulos em todas as tabelas
 def inspect_missing_values(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
-    """Identifica valores nulos em todas as tabelas. 
-    Retorna um dicionário com DataFrames contendo a contagem e a porcentagem de valores nulos por coluna para cada tabela."""
+    """
+        Identifica valores nulos em todas as tabelas. 
+        Retorna um dicionário com DataFrames contendo a contagem e a porcentagem de valores nulos por coluna para cada tabela.
+    """
 
     missing_values: dict[str, pd.DataFrame] = {}
 
@@ -112,6 +116,64 @@ def inspect_missing_values(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.Da
         missing_values[dataset_name] = result
 
     return missing_values
+
+#----------------------------------------------------------------------------
+
+#Função para identificar valores duplicados em todas as tabelas linha a linha
+def inspect_duplicate_rows(datasets: dict[str, pd.DataFrame]) -> dict[str, dict[str, int]]:
+    """ Identifica registros completamente duplicados em cada dataset. """
+
+    duplicate_summary: dict[str, dict[str, int]] = {}
+
+    for dataset_name, df in datasets.items():
+
+        total_rows: int = len(df)
+        duplicate_rows: int = int(df.duplicated().sum()) #Registro inteiro
+        unique_rows: int = total_rows - duplicate_rows
+
+        duplicate_summary[dataset_name] = {
+            "total_rows": total_rows,
+            "duplicate_rows": duplicate_rows,
+            "unique_rows": unique_rows
+        }
+
+    return duplicate_summary
+
+#----------------------------------------------------------------------------
+
+#Função para identificar valores duplicados em todas as tabelas com base em chaves primarias (Pks)
+def inspect_key_uniqueness(datasets: dict[str, pd.DataFrame], key_mapping: dict[str, list[str]]) -> dict[str, dict[str, int | bool]]:
+    """ Valida se as chaves primarias (Pks) das tabelas são únicas. """
+
+    uniqueness_summary: dict[str, dict[str, int | bool]] = {}
+
+    for dataset_name, key_columns in key_mapping.items():
+
+        df: pd.DataFrame = datasets[dataset_name]
+
+        total_rows: int = len(df)
+
+        unique_keys: int = int(
+            df[key_columns].drop_duplicates().shape[0]
+        )
+
+        duplicated_keys: int = int(
+            df.duplicated(
+                subset=key_columns,
+                keep=False
+            ).sum()
+        )
+
+        is_unique: bool = duplicated_keys == 0
+
+        uniqueness_summary[dataset_name] = {
+            "total_rows": total_rows,
+            "unique_keys": unique_keys,
+            "duplicated_keys": duplicated_keys,
+            "is_unique": is_unique
+        }
+
+    return uniqueness_summary
 
 #----------------------------------------------------------------------------
 
@@ -142,7 +204,7 @@ def save_csv_files(datasets: dict[str, pd.DataFrame],output_path: str) -> None:
 def id_type_column(column_name: str) -> bool:
     """ Verifica se a coluna representa um identificador (id), cpfs/cnpjs, etc. para ser tratada separadamente. """
 
-    #Informações obtidas da função show_columns, que mostra as colunas dos arquivos CSV na pasta "Dataset"
+    #Informações obtidas da função show_columns, que mostra as colunas dos arquivos CSV na pasta "Old_Dataset"
     column_name = column_name.strip().lower()
     return (
         column_name == "id"
@@ -213,7 +275,7 @@ def infer_type(column_name: str, values: list) -> str:
 
 #Funções para tratar nomes de tabelas e colunas para o PostgreSQL
 def created_table_name(filename: str) -> str:
-    """ Utiliza o nome do arquivo CSV como nome da tabela SQL."""
+    """ Utiliza o nome do arquivo CSV como nome da tabela SQL. """
     
     table_name = os.path.splitext(filename)[0]
 
@@ -223,7 +285,7 @@ def created_table_name(filename: str) -> str:
 
 #Funções para tratar nomes de tabelas e colunas para o PostgreSQL
 def created_column_name(column: str) -> str:
-    """ Normaliza o nome das colunas para PostgreSQL."""
+    """ Normaliza o nome das colunas para PostgreSQL. """
 
     #tratamento de possiveis espaços e caracteres especiais no nome da coluna
     column = column.strip()
@@ -287,7 +349,7 @@ def generated_schema(data_path: str, output_file: str) -> None:
 
 #Funções para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
 def created_table_name(filename: str) -> str:
-    """ Utiliza o nome do arquivo CSV como nome da tabela SQL."""
+    """ Utiliza o nome do arquivo CSV como nome da tabela SQL. """
     table_name = os.path.splitext(filename)[0]
 
     return table_name.lower()
@@ -296,7 +358,7 @@ def created_table_name(filename: str) -> str:
 
 #Funções para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
 def created_column_name(column: str) -> str:
-    """ Normaliza o nome das colunas para PostgreSQL."""
+    """ Normaliza o nome das colunas para PostgreSQL. """
 
     #Tratamento de possiveis espaços e caracteres especiais no nome da coluna
     column = column.strip()
@@ -415,3 +477,5 @@ def load_all_csvs_to_postgres(data_path: str, db_config: dict) -> None:
 
     finally:
         connection.close()
+
+#----------------------------------------------------------------------------
