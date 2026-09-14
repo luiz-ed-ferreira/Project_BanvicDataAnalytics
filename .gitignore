@@ -1,12 +1,9 @@
-#Dataset
+#Datasets
 /Old_Dataset
 /New_Dataset
 
 #Config DB
-/Config
+/config
 
 #Venv
 /.venv_banvic
-
-#Others
-/Others

@@ -2,6 +2,7 @@
 import pandas as pd
 
 #----------------------------------------------------------------------------
+
 #Função exclusiva para tratar as colunas com datas dos datasets, convertendo-as para o tipo datetime
 
 def convert_date_columns(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
@@ -41,3 +42,5 @@ def convert_date_columns(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.Data
             )
 
     return datasets
+
+#----------------------------------------------------------------------------

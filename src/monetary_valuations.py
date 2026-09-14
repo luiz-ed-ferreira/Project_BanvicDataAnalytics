@@ -54,4 +54,5 @@ def inspect_transaction_values(df: pd.DataFrame) -> dict[str, int]:
     }
 
     return validation_summary
+
 #----------------------------------------------------------------------------
