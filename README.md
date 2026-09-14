@@ -1,8 +1,8 @@
-# Project Banvic Bank - Indicium AI's Data Analytics certification
+# Project BanVic Bank - Indicium AI's Data Analytics certification
 
 ### Project overview
 
-A project developed as part of the final assessment process for Indicium AI's Data Analytics training program, based on a fictional bank case for Banvic. The project involved data analysis, identification of improvement opportunities, and the application of continuous improvement concepts to support decision-making, using Python and SQL.
+A project developed as part of the final assessment process for Indicium AI's Data Analytics training program, based on a fictional bank case for BanVic. The project involved data analysis, identification of improvement opportunities, and the application of continuous improvement concepts to support decision-making, using Python and SQL.
 
 Attention! Please note that this notebook is partially written in Brazilian Portuguese, as it was developed as a test project to evaluate my skills as part of the Indicium AI's Data Analytics certification.
 
@@ -36,7 +36,7 @@ In Progress  [developing]
 
 - The account has a valid agency, assigned employee, and multiple transactions, confirming that it is an active record despite the missing customer reference.
 
-- Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly.
+- Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
 
 ### Project structure
 
