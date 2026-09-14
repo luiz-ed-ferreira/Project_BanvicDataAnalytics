@@ -20,8 +20,8 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 In Progress  [developing]
 
 - [x] Data quality + preparation
-- [ ] EDA + insights
-- [ ] Data loading in PostgreSQL
+- [x] EDA + insights
+- [x] Data loading in PostgreSQL
 - [ ] KPIs + business questions
 - [ ] Dashboard mockup
 - [ ] Dashboard development
