@@ -33,6 +33,7 @@ def inspect_credit_proposals(df: pd.DataFrame) -> dict[str, int]:
     }
 
     return validation_summary
+
 #----------------------------------------------------------------------------
 
 #Função exclusiva para inspecionar os valores das transaçõesdo dataset 'transacoes.csv'
