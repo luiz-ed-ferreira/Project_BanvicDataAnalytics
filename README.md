@@ -46,7 +46,7 @@ In Progress  [developing]
 
 - Action: Investigate the accounts and transaction types driving the financial concentration before using this period as a trend reference.
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 ### Project structure
 
