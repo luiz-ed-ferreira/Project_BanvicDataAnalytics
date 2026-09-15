@@ -78,7 +78,7 @@ def analyze_transaction_evolution(transactions_df: pd.DataFrame) -> pd.DataFrame
     monthly_transactions: pd.DataFrame = (
         transactions_df
         .set_index("data_transacao")
-        .resample("ME")
+        .resample("ME") #Mensal
         .agg(
             transaction_count=("cod_transacao", "count"),
             total_transaction_value=("valor_transacao", "sum"),
@@ -88,3 +88,5 @@ def analyze_transaction_evolution(transactions_df: pd.DataFrame) -> pd.DataFrame
     )
 
     return monthly_transactions
+
+#----------------------------------------------------------------------------
