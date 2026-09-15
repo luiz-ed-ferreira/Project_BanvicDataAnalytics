@@ -1,4 +1,4 @@
-# Project BanVic Bank - Indicium AI's Data Analytics certification
+# Project BanVic Bank - Indicium AI's Data Analytics Certification
 
 ### Project overview
 
@@ -41,29 +41,29 @@ In Progress  [developing]
 ### Project structure
 
 <br> RAW DATA (ORIGINAL CSVs files)
-<br>   │
+<br>         │
 <br> DATA QUALITY & PREPARATION
-<br>   │
-<br>   ├── Validation
-<br>   ├── Cleaning
-<br>   ├── Transformation
-<br>   └── Business Rules
-<br>   │
-<br> EDA
-<br>   │
-<br> BUSINESS INSIGHTS
-<br>   │
-<br> POSTGRESQL
-<br>   │
-<br> KPIs
-<br>   │
-<br> MOCKUP
-<br>   │
-<br> POWER BI
-<br>   │
-<br> RECOMMENDATIONS
-<br>   │
-<br> PRESENTATION
+<br>         │
+<br>         ├── Validation
+<br>         ├── Cleaning
+<br>         ├── Transformation
+<br>         └── Business Rules
+<br>         │
+<br>        EDA
+<br>         │
+<br>  BUSINESS INSIGHTS
+<br>         │
+<br>     POSTGRESQL
+<br>         │
+<br>        KPIs
+<br>         │
+<br>       MOCKUP
+<br>         │
+<br>      POWER BI
+<br>         │
+<br>   RECOMMENDATIONS
+<br>         │
+<br>    PRESENTATION
 
 ### Prerequisites & used softwares
 
