@@ -36,7 +36,17 @@ In Progress  [developing]
 
 - The account has a valid agency, assigned employee, and multiple transactions, confirming that it is an active record despite the missing customer reference.
 
-- Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
+- Action: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
+
+> 📈 Transaction Peak Analysis — December 2022
+
+- A transaction volume anomaly was identified in December 2022, with 80.7% of transactions occurring on December 29–30.
+
+- The peak was broadly distributed across accounts, but the top 20 accounts by transaction value concentrated 60.54% of the financial movement while representing only 3.61% of transactions.
+
+- Action: Investigate the accounts and transaction types driving the financial concentration before using this period as a trend reference.
+
+![alt text](image.png)
 
 ### Project structure
 
