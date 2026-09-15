@@ -54,12 +54,8 @@ def analyze_customer_accounts(customers_df: pd.DataFrame, accounts_df: pd.DataFr
 #Função para identificar quais contas bancárias são anomalas com base em uma lista de identificadores fornecida.
 def flag_anomalous_accounts(accounts_df: pd.DataFrame,anomalous_account_ids: list[int]) -> pd.DataFrame:
     """
-    Adiciona uma flag identificando contas classificadas como anômalas.
-
-    Retorna
-    -------
-    pd.DataFrame
-        DataFrame contendo a coluna 'anomalia', com True para contas anômalas e False para as demais.
+        Adiciona uma flag identificando contas classificadas como anômalas.
+        Retorna um dataFrame contendo a coluna 'anomalia', com True para contas anômalas e False para as demais.
     """
 
     accounts_df = accounts_df.copy()
@@ -71,3 +67,24 @@ def flag_anomalous_accounts(accounts_df: pd.DataFrame,anomalous_account_ids: lis
     return accounts_df
 
 #----------------------------------------------------------------------------
+
+#Função para analisar a evolução das transações bancárias ao longo do periodo mensal
+def analyze_transaction_evolution(transactions_df: pd.DataFrame) -> pd.DataFrame:
+    """
+        Analisa a evolução mensal das transações bancárias.
+        A análise calcula a quantidade de transações, o valor total transacionado e o ticket médio por mês.
+    """
+
+    monthly_transactions: pd.DataFrame = (
+        transactions_df
+        .set_index("data_transacao")
+        .resample("ME")
+        .agg(
+            transaction_count=("cod_transacao", "count"),
+            total_transaction_value=("valor_transacao", "sum"),
+            average_transaction_value=("valor_transacao", "mean")
+        )
+        .reset_index()
+    )
+
+    return monthly_transactions
