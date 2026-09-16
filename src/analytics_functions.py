@@ -90,3 +90,121 @@ def analyze_transaction_evolution(transactions_df: pd.DataFrame) -> pd.DataFrame
     return monthly_transactions
 
 #----------------------------------------------------------------------------
+
+#Função para analisar a relação entre clientes, agências e transações de acordo com o periodo
+def analyze_transaction_profile(transactions_df: pd.DataFrame, accounts_df: pd.DataFrame, customers_df: pd.DataFrame, agencies_df: pd.DataFrame) -> pd.DataFrame:
+    """
+        Analisa a evolução das transações considerando o tipo de cliente,
+        o tipo de agência e o tipo de transação.
+    """
+
+    transaction_profile: pd.DataFrame = (
+        transactions_df
+        .merge(
+            accounts_df[
+                ["num_conta", "cod_cliente", "cod_agencia"]
+            ],
+            on="num_conta",
+            how="left"
+        )
+        .merge(
+            customers_df[
+                ["cod_cliente", "tipo_cliente"]
+            ],
+            on="cod_cliente",
+            how="left"
+        )
+        .merge(
+            agencies_df[
+                ["cod_agencia", "tipo_agencia"]
+            ],
+            on="cod_agencia",
+            how="left"
+        )
+        .assign(
+            transaction_month=lambda df: (
+                df["data_transacao"]
+                .dt.tz_localize(None)
+                .dt.to_period("M")
+            )
+        )
+        .groupby(
+            [
+                "transaction_month",
+                "tipo_cliente",
+                "tipo_agencia",
+                "nome_transacao"
+            ]
+        )
+        .agg(
+            transaction_count=("cod_transacao", "count"),
+            total_transaction_value=("valor_transacao", "sum")
+        )
+        .reset_index()
+    )
+
+    return transaction_profile
+
+#----------------------------------------------------------------------------
+
+#Função para analisar evolução mensal das transações por agência fisica ou digital
+def prepare_channel_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFrame:
+    """ Analisa a evolução mensal das transações por tipo de agência. """
+
+    channel_evolution: pd.DataFrame = (
+        transaction_profile_df
+        .groupby(
+            [
+                "transaction_month",
+                "tipo_agencia"
+            ]
+        )
+        .agg(
+            transaction_count=("transaction_count", "sum")
+        )
+        .reset_index()
+        .sort_values("transaction_month")
+    )
+
+    return channel_evolution
+
+#----------------------------------------------------------------------------
+
+#Função para analisar a evolução mensal do pix com as outras transações
+def prepare_pix_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFrame:
+    """ Prepara a evolução mensal das transações Pix versus demais tipos de transação. """
+
+    #Detalhamento das transações via pix obtidas após analisar datasets
+    pix_transaction_types: list[str] = [
+        "Pix - Realizado",
+        "Pix - Recebido",
+        "Pix Saque"
+    ]
+
+    pix_evolution: pd.DataFrame = (
+        transaction_profile_df
+        .assign(
+            transaction_group=lambda df: df["nome_transacao"].apply(
+                lambda transaction_type: (
+                    "Pix"
+                    if transaction_type in pix_transaction_types
+                    else "Demais transações"
+                )
+            )
+        )
+        .groupby(
+            [
+                "transaction_month",
+                "transaction_group"
+            ]
+        )
+        .agg(
+            transaction_count=("transaction_count", "sum")
+        )
+        .reset_index()
+        .sort_values("transaction_month")
+    )
+
+    return pix_evolution
+
+#----------------------------------------------------------------------------

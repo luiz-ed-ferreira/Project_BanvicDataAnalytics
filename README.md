@@ -46,7 +46,19 @@ In Progress  [developing]
 
 - Action: Investigate the accounts and transaction types driving the financial concentration before using this period as a trend reference.
 
-![alt text](img/image.png)
+![alt text](img/image_evo_transaction.png)
+
+> 💠 Pix Adoption — November 2020
+
+- The analysis indicates that **Pix was adopted in November 2020** and remained a relevant transaction channel over time.
+
+- Although Pix transactions remained below the combined volume of other transaction types, the difference became relatively small considering that the comparison aggregates multiple channels, including credit and debit card transactions.
+
+- During the **December 2022 transaction peak**, Pix accounted for **10,267 transactions (40.6%)**, compared with **15,052 transactions across all other transaction types**.
+
+- This suggests that Pix became a significant component of BanVic's transaction activity, although the available data does not support attributing the December 2022 peak exclusively to Pix.
+
+![alt text](img/image_pix.png)
 
 ### Project structure
 
