@@ -13,7 +13,7 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 - EDA: conduct an organized exploration, justify analyses, and document insights
 - Dashboard: ensure effective visualization, UX, storytelling, data validation, and documentation
 - Recommendations: translate insights into concrete actions, including demonstrating the value of a data-driven
-- Presentation: complete story: problem → data → analysis → discovery → decision
+- Presentation: complete story: problem -> data -> analysis -> discovery -> decision
 
 ### Status & improvements
 
@@ -28,7 +28,7 @@ In Progress  [developing]
 - [ ] Business rules documentation / recommendations
 - [ ] Final presentation
 
-### EDA observations
+### Data quality
 
 > ⚠️ Data Anomaly — Account 528
 
@@ -36,7 +36,9 @@ In Progress  [developing]
 
 - The account has a valid agency, assigned employee, and multiple transactions, confirming that it is an active record despite the missing customer reference.
 
-- Action: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
+- Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
+
+### EDA insights
 
 > 📈 Transaction Peak Analysis — December 2022
 
@@ -60,39 +62,13 @@ In Progress  [developing]
 
 ![alt text](img/image_pix.png)
 
-### Project structure
-
-<br> RAW DATA (ORIGINAL CSVs files)
-<br>         │
-<br> DATA QUALITY & PREPARATION
-<br>         │
-<br>         ├── Validation
-<br>         ├── Cleaning
-<br>         ├── Transformation
-<br>         └── Business Rules
-<br>         │
-<br>        EDA
-<br>         │
-<br>  BUSINESS INSIGHTS
-<br>         │
-<br>     POSTGRESQL
-<br>         │
-<br>        KPIs
-<br>         │
-<br>       MOCKUP
-<br>         │
-<br>      POWER BI
-<br>         │
-<br>   RECOMMENDATIONS
-<br>         │
-<br>    PRESENTATION
-
 ### Prerequisites & used softwares
 
 - WSL Linux/Ubuntu for Windows 11 System
 - Python version 3.12.3
 - PostgreSQL version 18.6
 - Power BI version 2.157.879
+- Figma account
 
 > Attention! Consult the requirements.txt file for more information about python libraries used.
 
