@@ -50,7 +50,7 @@ However, during the December 2022 transaction peak, digital branches recorded mo
 
  **Note:** December 2022 presents an exceptional transaction spike that exceeds the scale used in the visualization. Therefore, this period should be interpreted separately when evaluating the historical trend.
 
-![alt text](img/branch.png)
+![alt text](img/image_branch.png)
 
 > 📈 Transaction Peak Analysis — December 2022
 
