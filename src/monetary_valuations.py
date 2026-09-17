@@ -3,9 +3,9 @@ import pandas as pd
 
 #----------------------------------------------------------------------------
 
-#Função exclusiva para inspecionar os valores das propostas de crédito do dataset 'propostas_credito.csv'
+#Função exclusiva para inspecionar os valores das propostas de crédito do dataset propostas_credito.csv
 def inspect_credit_proposals(df: pd.DataFrame) -> dict[str, int]:
-    """ Identifica possíveis inconsistências nos valores das propostas de crédito do dataset 'propostas_credito.csv'. """
+    """ Identifica possíveis inconsistências nos valores das propostas de crédito do dataset propostas_credito.csv. """
 
     #As colunas a seguir foram definidas para analise conforme inspeção inicial no dataset de origem: propostas_credito.csv
     validation_summary: dict[str, int] = {
@@ -36,9 +36,9 @@ def inspect_credit_proposals(df: pd.DataFrame) -> dict[str, int]:
 
 #----------------------------------------------------------------------------
 
-#Função exclusiva para inspecionar os valores das transaçõesdo dataset 'transacoes.csv'
+#Função exclusiva para inspecionar os valores das transações do dataset transacoes.csv
 def inspect_transaction_values(df: pd.DataFrame) -> dict[str, int]:
-    """ Identifica possíveis inconsistências nos valores das transações do dataset 'transacoes.csv'. """
+    """ Identifica possíveis inconsistências nos valores das transações do dataset transacoes.csv. """
 
     #As colunas a seguir foram definidas para analise conforme inspeção inicial no dataset de origem: transacoes.csv
     validation_summary: dict[str, int] = {

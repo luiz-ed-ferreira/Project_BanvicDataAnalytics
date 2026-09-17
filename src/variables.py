@@ -3,7 +3,7 @@ import json
 
 #----------------------------------------------------------------------------
 
-#Definindo o diretório onde os arquivos CSVs estão localizados, onde serão salvos e o nome do arquivo de saída do schema
+#Definindo o diretório onde os arquivos CSVs estão localizados, onde serão salvos e o nome do arquivo de saída do schema SQL
 OLD_DATASET_DIR = "Old_Dataset"
 NEW_DATASET_DIR = "New_Dataset"
 OUTPUT_FILE = "schema/schema_banvic.sql"
@@ -15,7 +15,6 @@ with open("config/db_config.json", "r", encoding="utf-8") as file:
     config = json.load(file)
 
 #Arquivo de configuração do banco de dados PostgreSQL não será carregado no GitHub por questões de segurança
-#ip route | grep default > para verificar qual é o IP do host
 DB_CONFIG = {
     "host": config["host"],
     "port": config["port"],

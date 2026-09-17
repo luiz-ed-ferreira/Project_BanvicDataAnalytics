@@ -5,15 +5,7 @@ import pandas as pd
 
 #Função para analisar a relação de clientes e suas contas bancárias
 def analyze_customer_accounts(customers_df: pd.DataFrame, accounts_df: pd.DataFrame) -> dict[str, int | float | pd.DataFrame]:
-    """
-        Analisa a relação entre clientes e contas bancárias.
-
-        A análise responde às seguintes perguntas:
-        1. Quantos clientes possuem pelo menos uma conta?
-        2. Quantos clientes possuem mais de uma conta?
-        3. Existem contas sem cliente correspondente?
-
-    """
+    """ Analisa a relação entre clientes e contas bancárias. """
 
     customer_ids: pd.Series = customers_df["cod_cliente"]
     account_customer_ids: pd.Series = accounts_df["cod_cliente"]
@@ -51,7 +43,7 @@ def analyze_customer_accounts(customers_df: pd.DataFrame, accounts_df: pd.DataFr
 
 #----------------------------------------------------------------------------
 
-#Função para identificar quais contas bancárias são anomalas com base em uma lista de identificadores fornecida.
+#Função para identificar quais contas bancárias são anômalas com base em uma lista de identificadores fornecida
 def flag_anomalous_accounts(accounts_df: pd.DataFrame,anomalous_account_ids: list[int]) -> pd.DataFrame:
     """
         Adiciona uma flag identificando contas classificadas como anômalas.
@@ -91,7 +83,7 @@ def analyze_transaction_evolution(transactions_df: pd.DataFrame) -> pd.DataFrame
 
 #----------------------------------------------------------------------------
 
-#Função para analisar a relação entre clientes, agências e transações de acordo com o periodo
+#Função para analisar a relação entre clientes, agências e transações de acordo com o periodo mensal
 def analyze_transaction_profile(transactions_df: pd.DataFrame, accounts_df: pd.DataFrame, customers_df: pd.DataFrame, agencies_df: pd.DataFrame) -> pd.DataFrame:
     """
         Analisa a evolução das transações considerando o tipo de cliente,
@@ -170,11 +162,13 @@ def prepare_channel_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFr
 
 #----------------------------------------------------------------------------
 
-#Função para analisar a evolução mensal do pix com as outras transações
+#Função para analisar a evolução mensal do PIX em comparação com as outras transações
 def prepare_pix_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFrame:
-    """ Prepara a evolução mensal das transações Pix versus demais tipos de transação. """
-
-    #Detalhamento das transações via pix obtidas após analisar datasets
+    """ 
+        Prepara a evolução mensal das transações PIX versus demais tipos de transação. 
+        Detalhamento das transações via PIX obtidas após analisar os valores da coluna nome_transacao no dataset transacao.csv.
+    """
+    
     pix_transaction_types: list[str] = [
         "Pix - Realizado",
         "Pix - Recebido",
@@ -186,9 +180,9 @@ def prepare_pix_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFrame:
         .assign(
             transaction_group=lambda df: df["nome_transacao"].apply(
                 lambda transaction_type: (
-                    "Pix"
+                    "PIX"
                     if transaction_type in pix_transaction_types
-                    else "Demais transações"
+                    else "Others"
                 )
             )
         )

@@ -7,7 +7,7 @@ from datetime import datetime
 
 #----------------------------------------------------------------------------
 
-#Função para mostrar as colunas dos arquivos CSVs em uma pasta especifica
+#Função para apresentar as colunas dos arquivos CSVs em uma pasta especifica
 def show_columns(data_path: str) -> None:
     """ Lê todos os arquivos CSVs de uma pasta e apresenta as colunas existentes em cada arquivo. """
 
@@ -42,7 +42,7 @@ def show_columns(data_path: str) -> None:
 #Função para carregar os arquivos CSVs para identificar a quantidade de linhas e colunas
 def load_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
     """
-        Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os DataFrames correspondentes.
+        Lê todos os arquivos CSVs de um diretório especificado e retorne um dicionário contendo os dataframes correspondentes.
         Auxilia na identificação da quantidade de linhas e colunas de cada arquivo CSV. 
     """
 
@@ -69,9 +69,9 @@ def load_csv_files(data_path: str) -> dict[str, pd.DataFrame]:
 
 #----------------------------------------------------------------------------
 
-#Função para inspecionar os tipos de dados de todas as tabelas carregadas
+#Função para inspecionar os tipos de dados de todos os dataframes carregados no dicionário
 def inspect_data_types(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
-    """ Inspeciona os tipos de dados de todas as tabelas carregadas. """
+    """ Inspeciona os tipos de dados de todos os dataframes carregados no dicionário. """
 
     data_types: dict[str, pd.DataFrame] = {}
 
@@ -85,11 +85,11 @@ def inspect_data_types(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
 
 #----------------------------------------------------------------------------
 
-#Função para identificar valores nulos em todas as tabelas
+#Função para identificar valores nulos de todos os dataframes carregados no dicionário
 def inspect_missing_values(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
     """
-        Identifica valores nulos em todas as tabelas. 
-        Retorna um dicionário com DataFrames contendo a contagem e a porcentagem de valores nulos por coluna para cada tabela.
+        Identifica valores nulos de todos os dataframes carregados no dicionário. 
+        Retorna um dicionário com dataframes contendo a contagem e a porcentagem de valores nulos por coluna para cada tabela.
     """
 
     missing_values: dict[str, pd.DataFrame] = {}
@@ -119,9 +119,9 @@ def inspect_missing_values(datasets: dict[str, pd.DataFrame]) -> dict[str, pd.Da
 
 #----------------------------------------------------------------------------
 
-#Função para identificar valores duplicados em todas as tabelas linha a linha
+#Função para identificar valores duplicados de todos os dataframes carregados no dicionário (linha a linha)
 def inspect_duplicate_rows(datasets: dict[str, pd.DataFrame]) -> dict[str, dict[str, int]]:
-    """ Identifica registros completamente duplicados em cada dataset. """
+    """ Identifica registros completamente duplicados de todos os dataframes carregados no dicionário (linha a linha). """
 
     duplicate_summary: dict[str, dict[str, int]] = {}
 
@@ -141,9 +141,12 @@ def inspect_duplicate_rows(datasets: dict[str, pd.DataFrame]) -> dict[str, dict[
 
 #----------------------------------------------------------------------------
 
-#Função para identificar valores duplicados em todas as tabelas com base em chaves primarias (Pks)
+#Função para identificar valores duplicados em todas as tabelas com base em chaves primarias (PKs)
 def inspect_key_uniqueness(datasets: dict[str, pd.DataFrame], key_mapping: dict[str, list[str]]) -> dict[str, dict[str, int | bool]]:
-    """ Valida se as chaves primarias (Pks) das tabelas são únicas. """
+    """ 
+        Valida se as chaves primarias (PKs) de todos os dataframes carregados no dicionário são únicas. 
+        As colunas definidas como PKs precisam ser adicionadas no key_mapping.
+    """
 
     uniqueness_summary: dict[str, dict[str, int | bool]] = {}
 
@@ -177,12 +180,11 @@ def inspect_key_uniqueness(datasets: dict[str, pd.DataFrame], key_mapping: dict[
 
 #----------------------------------------------------------------------------
 
-#Função para salvar os DataFrames tratados em arquivos CSV
+#Função para salvar todos os dataframes carregados no dicionário tratados em arquivos CSVs
 def save_csv_files(datasets: dict[str, pd.DataFrame],output_path: str) -> None:
     """
-        Salva os DataFrames tratados em arquivos CSV.
-        O nome de cada arquivo será baseado na chave correspondente
-        do dicionário de datasets.
+        Salva os dataframes tratados em arquivos CSVs.
+        O nome de cada arquivo será baseado na chave correspondente de todos os dataframes carregados no dicionário.
     """
 
     os.makedirs(output_path, exist_ok=True)
@@ -200,11 +202,11 @@ def save_csv_files(datasets: dict[str, pd.DataFrame],output_path: str) -> None:
 
 #----------------------------------------------------------------------------
 
-#Função para identificar colunas que são identificadores (id), cpfs/cnpjs, etc., que devem ser tratados como TEXT
+#Função para identificar as colunas que são identificadores (id), que devem ser tratados como TEXT
 def id_type_column(column_name: str) -> bool:
-    """ Verifica se a coluna representa um identificador (id), cpfs/cnpjs, etc. para ser tratada separadamente. """
+    """ Verifica se a coluna representa um identificador (id) para ser tratada separadamente como TEXT no schema SQL. """
 
-    #Informações obtidas da função show_columns, que mostra as colunas dos arquivos CSV na pasta "Old_Dataset"
+    #Informações obtidas da função show_columns, que mostra as colunas dos arquivos CSVs
     column_name = column_name.strip().lower()
     return (
         column_name == "id"
@@ -218,13 +220,13 @@ def id_type_column(column_name: str) -> bool:
 
 #----------------------------------------------------------------------------
 
-#Função para inferir o tipo de dados de cada coluna com base nos valores encontrados nos CSVs
+#Função para inferir o tipo de dados de cada coluna com base nos valores encontrados nos datasets CSVs
 def infer_type(column_name: str, values: list) -> str:
-    """ Infere o tipo de SQL de acordo com o que o PostgreSQL aceita no schema com base nos valores encontrados. """
+    """ Infere o tipo de dado SQL de acordo com o que o PostgreSQL aceita no schema com base nos valores encontrados de todos os dataframes carregados no dicionário. """
     
     values = [value.strip() for value in values if value.strip()]
 
-    #Colunas de IDs serão sempre tratados como TEXT
+    #Colunas de ids serão sempre tratados como TEXT
     if id_type_column(column_name):
         return "TEXT"
 
@@ -293,7 +295,7 @@ def infer_type(column_name: str, values: list) -> str:
 
 #----------------------------------------------------------------------------
 
-#Funções para tratar nomes de tabelas e colunas para o PostgreSQL
+#Função para tratar os nomes de tabelas e colunas para o PostgreSQL
 def created_table_name(filename: str) -> str:
     """ Utiliza o nome do arquivo CSV como nome da tabela SQL. """
     
@@ -303,11 +305,11 @@ def created_table_name(filename: str) -> str:
 
 #----------------------------------------------------------------------------
 
-#Funções para tratar nomes de tabelas e colunas para o PostgreSQL
+#Função para tratar os nomes de tabelas e colunas para o PostgreSQL
 def created_column_name(column: str) -> str:
-    """ Normaliza o nome das colunas para PostgreSQL. """
+    """ Normaliza o nome das colunas para PostgreSQL de acordo com o nome das colunas de todos os dataframes do dicionário carregado. """
 
-    #tratamento de possiveis espaços e caracteres especiais no nome da coluna
+    #Tratamento de possiveis espaços e caracteres especiais no nome da coluna
     column = column.strip()
     column = column.replace(" ", "_")
     column = column.replace("-", "_")
@@ -342,7 +344,7 @@ def generated_schema(data_path: str, output_file: str) -> None:
             column_definitions = []
 
             for column_name, values in zip(header, columns):
-                original_column_name = column_name #Para verifcar as colunas Ids
+                original_column_name = column_name #Para verifcar as colunas ids
                 column_name = created_column_name(column_name)
                 data_type = infer_type(original_column_name, values)
                 column_definitions.append(
@@ -367,7 +369,7 @@ def generated_schema(data_path: str, output_file: str) -> None:
 
 #----------------------------------------------------------------------------
 
-#Funções para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
+#Função para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
 def created_table_name(filename: str) -> str:
     """ Utiliza o nome do arquivo CSV como nome da tabela SQL. """
     table_name = os.path.splitext(filename)[0]
@@ -376,7 +378,7 @@ def created_table_name(filename: str) -> str:
 
 #----------------------------------------------------------------------------
 
-#Funções para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
+#Função para tratar nomes de tabelas e colunas para o PostgreSQL sendo as mesmas usadas para gerar o schema SQL a partir dos arquivos CSVs
 def created_column_name(column: str) -> str:
     """ Normaliza o nome das colunas para PostgreSQL. """
 
@@ -448,8 +450,7 @@ def load_csv_to_postgres(connection, filepath: str):
             for column, value in zip(columns, row):
                 column_type = column_types.get(column)
 
-                #Se o valor estiver vazio e a coluna for
-                #DATE, TIMESTAMP ou INTEGER são os mais afetados, então o valor serão tratados como NULL (SQL)
+                #Se o valor estiver vazio e a coluna for DATE, TIMESTAMP ou INTEGER são os mais afetados, então o valor serão tratados como nulos (SQL)
                 if value == "" and column_type in (
                     "date",
                     "timestamp without time zone",
@@ -471,11 +472,11 @@ def load_csv_to_postgres(connection, filepath: str):
 
 #Função para chamar todos os arquivos CSVs e a partir da função load_csv_to_postgres inserir no PostgreSQL
 def load_all_csvs_to_postgres(data_path: str, db_config: dict) -> None:
-    """ Carrega todos os arquivos CSV do diretório NEW_DATASER_DIR para o banco de dados PostgreSQL. """
+    """ Carrega todos os arquivos CSV do diretório informado para o banco de dados PostgreSQL. """
 
     connection = psycopg2.connect(**db_config)
 
-    #Busca apenas arquivos CSV no diretório NEW_DATASER_DIR e chama a função load_csv_to_postgres para cada arquivo encontrado
+    #Busca apenas arquivos CSVs no diretório informado e chama a função load_csv_to_postgres para cada arquivo encontrado
     try:
         files = sorted(os.listdir(data_path))
         for filename in files:
