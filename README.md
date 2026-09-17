@@ -46,21 +46,29 @@ In Progress  [developing]
 
 - The peak was broadly distributed across accounts, but the top 20 accounts by transaction value concentrated 60.54% of the financial movement while representing only 3.61% of transactions.
 
-- Action: Investigate the accounts and transaction types driving the financial concentration before using this period as a trend reference.
+- The growth in transaction volume observed in December 2022 may be linked to changes in customer usage patterns and the adoption of new payment methods and digital platforms, particularly PIX.
 
 ![alt text](img/image_evo_transaction.png)
 
-> 💠 Pix Adoption — November 2020
+> 💠 PIX Adoption — November 2020
 
-- The analysis indicates that **Pix was adopted in November 2020** and remained a relevant transaction channel over time.
+- The analysis indicates that PIX was adopted in November 2020 and remained a relevant transaction channel over time.
 
-- Although Pix transactions remained below the combined volume of other transaction types, the difference became relatively small considering that the comparison aggregates multiple channels, including credit and debit card transactions.
+- Although PIX transactions remained below the combined volume of other transaction types, the difference became relatively small considering that the comparison aggregates multiple channels, including credit and debit card transactions.
 
-- During the **December 2022 transaction peak**, Pix accounted for **10,267 transactions (40.6%)**, compared with **15,052 transactions across all other transaction types**.
+- During the December 2022 transaction peak, PIX accounted for 10,267 transactions (40.6%), compared with 15,052 transactions across all other transaction types.
 
-- This suggests that Pix became a significant component of BanVic's transaction activity, although the available data does not support attributing the December 2022 peak exclusively to Pix.
+- This suggests that PIX became a significant component of BanVic's transaction activity, although the available data does not support attributing the December 2022 peak exclusively to PIX.
 
 ![alt text](img/image_pix.png)
+
+> 🏦 Digital Adoption — August 2015
+
+The analysis shows that digital branches were introduced in August 2015. Following their adoption, transaction volumes across digital and physical branches remained relatively balanced over time, with neither channel consistently dominating the other.
+
+However, during the December 2022 transaction peak, digital branches recorded more than 2,000 additional transactions compared with physical branches. This represents a notable deviation from the historical balance between the two channels.
+
+ **Note:** December 2022 presents an exceptional transaction spike that exceeds the scale used in the visualization. Therefore, this period should be interpreted separately when evaluating the historical trend.
 
 ### Prerequisites & used softwares
 
