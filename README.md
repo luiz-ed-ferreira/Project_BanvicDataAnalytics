@@ -28,17 +28,29 @@ In Progress  [developing]
 - [ ] Business rules documentation / recommendations
 - [ ] Final presentation
 
-### Data quality
+### Data quality observations
 
-> ⚠️ Data Anomaly — Account 528
+> ⚠️ Data Anomaly — Account 528 without customer association
 
-- During the Customers × Accounts analysis, we identified 998 customers and 999 accounts. A referential integrity check revealed that only account 528 references a non-existent customer (cod_cliente = 528).
+- During the Customers × Accounts analysis, I identified 998 customers and 999 accounts. A referential integrity check revealed that only account 528 references a non-existent customer (cod_cliente = 528).
 
 - The account has a valid agency, assigned employee, and multiple transactions, confirming that it is an active record despite the missing customer reference.
 
 - Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
 
 ### EDA insights
+
+> 🏦 Digital Branch Adoption — August 2015
+
+The analysis shows that digital branches were introduced in August 2015. Following their adoption, transaction volumes across digital and physical branches remained relatively balanced over time, with neither channel consistently dominating the other.
+
+Since the introduction of digital branches in 2015, the number of accounts associated with this channel has grown consistently, reaching 460 cumulative accounts by 2022. Although physical branches still held a larger cumulative account base (539), the gap narrowed from 188 accounts in 2015 to 79 in 2022, indicating progressive adoption of the digital banking channel.
+
+However, during the December 2022 transaction peak, digital branches recorded more than 2,000 additional transactions compared with physical branches. This represents a notable deviation from the historical balance between the two channels.
+
+ **Note:** December 2022 presents an exceptional transaction spike that exceeds the scale used in the visualization. Therefore, this period should be interpreted separately when evaluating the historical trend.
+
+![alt text](img/branch.png)
 
 > 📈 Transaction Peak Analysis — December 2022
 
@@ -61,14 +73,6 @@ In Progress  [developing]
 - This suggests that PIX became a significant component of BanVic's transaction activity, although the available data does not support attributing the December 2022 peak exclusively to PIX.
 
 ![alt text](img/image_pix.png)
-
-> 🏦 Digital Adoption — August 2015
-
-The analysis shows that digital branches were introduced in August 2015. Following their adoption, transaction volumes across digital and physical branches remained relatively balanced over time, with neither channel consistently dominating the other.
-
-However, during the December 2022 transaction peak, digital branches recorded more than 2,000 additional transactions compared with physical branches. This represents a notable deviation from the historical balance between the two channels.
-
- **Note:** December 2022 presents an exceptional transaction spike that exceeds the scale used in the visualization. Therefore, this period should be interpreted separately when evaluating the historical trend.
 
 ### Prerequisites & used softwares
 

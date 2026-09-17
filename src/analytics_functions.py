@@ -1,6 +1,51 @@
 #Importando as bibliotecas necessárias
 import pandas as pd
 
+#Função que analisa o crescimento acumulado de contas abertas ao longo dos anos, 
+#segmentado por tipo de agência e composição entre contas digitais e físicas.
+
+def analyze_cumulative_account_growth(accounts_df: pd.DataFrame, agencies_df: pd.DataFrame) -> pd.DataFrame:
+    """Analisa o crescimento acumulado de contas abertas ao longo dos anos, segmentado por tipo de agência e tipo de conta. """
+
+    account_growth: pd.DataFrame = (
+        accounts_df
+        .merge(
+            agencies_df[
+                ["cod_agencia", "tipo_agencia"]
+            ],
+            on="cod_agencia",
+            how="left"
+        )
+        .assign(
+            opening_year=lambda df: (
+                df["data_abertura"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+        .groupby(
+            ["opening_year", "tipo_agencia", "tipo_conta"]
+        )
+        .agg(
+            new_accounts=("num_conta", "count")
+        )
+        .reset_index()
+        .sort_values(
+            ["tipo_agencia", "opening_year", "tipo_conta"]
+        )
+    )
+
+    #Calcula o número acumulado de contas por tipo de conta e agência
+    account_growth["cumulative_accounts"] = (
+        account_growth
+        .groupby(
+            ["tipo_agencia", "tipo_conta"]
+        )["new_accounts"]
+        .cumsum()
+    )
+
+    return account_growth
+
 #----------------------------------------------------------------------------
 
 #Função para analisar a relação de clientes e suas contas bancárias
