@@ -1,9 +1,148 @@
 #Importando as bibliotecas necessárias
 import pandas as pd
 
-#Função que analisa o crescimento acumulado de contas abertas ao longo dos anos, 
-#segmentado por tipo de agência e composição entre contas digitais e físicas.
+#----------------------------------------------------------------------------
 
+#Função que analisa quantidade de transações por tipo
+def analyze_transaction_volume_by_type(transactions_df: pd.DataFrame) -> pd.DataFrame:
+    """ Analisa o volume de transações por tipo de operação. """
+
+    transaction_volume: pd.DataFrame = (
+        transactions_df
+        .groupby("nome_transacao")
+        .agg(
+            transaction_count=("cod_transacao", "count")
+        )
+        .reset_index()
+        .sort_values(
+            "transaction_count",
+            ascending=False
+        )
+    )
+
+    return transaction_volume
+
+#----------------------------------------------------------------------------
+
+#Função que classifica clientes ativos (pelo menos 1 transação) e clientes inativos (sem transações) em 2022
+def analyze_customer_activity_2022(customers_df: pd.DataFrame,transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
+    """ Classifica os clientes como ativos ou sem transações em 2022 (pedido para analise do time comercial). """
+
+    active_customers = (
+        transactions_df[
+            transactions_df["data_transacao"]
+            .dt.tz_localize(None)
+            .dt.year
+            .eq(2022)
+        ]
+        .merge(
+            accounts_df[["num_conta", "cod_cliente"]],
+            on="num_conta",
+            how="left"
+        )["cod_cliente"]
+        .dropna()
+        .unique()
+    )
+
+    activity = customers_df[["cod_cliente"]].copy()
+
+    activity["activity_status"] = activity["cod_cliente"].isin(
+        active_customers
+    ).map({
+        True: "Active",
+        False: "No transactions"
+    })
+
+    result = (
+        activity
+        .groupby("activity_status")
+        .agg(
+            customer_count=("cod_cliente", "count")
+        )
+        .reset_index()
+    )
+
+    result["percentage"] = round((
+        result["customer_count"]
+        / result["customer_count"].sum()
+        * 100
+    ),2)
+
+    return result
+
+#----------------------------------------------------------------------------
+
+#Função analisa a tendência de inatividade anual dos clientes
+def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
+    """
+        Analisa a atividade anual dos clientes.
+        Classifica cada cliente como ativo ou sem transações em cada ano disponível na base de transações.
+    """
+    transaction_data = (
+        transactions_df
+        .assign(
+            transaction_year=lambda df: (
+                df["data_transacao"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+        .merge(
+            accounts_df[["num_conta", "cod_cliente"]],
+            on="num_conta",
+            how="left"
+        )
+        [["transaction_year", "cod_cliente"]]
+        .dropna()
+        .drop_duplicates()
+    )
+
+    years = sorted(transaction_data["transaction_year"].unique())
+
+    customer_year = (
+        pd.MultiIndex.from_product(
+            [customers_df["cod_cliente"], years],
+            names=["cod_cliente", "transaction_year"]
+        )
+        .to_frame(index=False)
+    )
+
+    customer_year["is_active"] = (
+        customer_year
+        .merge(
+            transaction_data.assign(is_active=True),
+            on=["cod_cliente", "transaction_year"],
+            how="left"
+        )["is_active"]
+        .fillna(False)
+    )
+
+    activity_by_year = (
+        customer_year
+        .assign(
+            activity_status=lambda df: df["is_active"].map({
+                True: "Active",
+                False: "No transactions"
+            })
+        )
+        .groupby(["transaction_year", "activity_status"])
+        .agg(
+            customer_count=("cod_cliente", "count")
+        )
+        .reset_index()
+    )
+
+    activity_by_year["percentage"] = round((
+        activity_by_year["customer_count"]
+        / len(customers_df)
+        * 100
+    ),2)
+
+    return activity_by_year
+
+#----------------------------------------------------------------------------
+
+#Função que analisa o crescimento acumulado de contas abertas ao longo dos anos, segmentado por tipo de agência e composição entre contas digitais e físicas.
 def analyze_cumulative_account_growth(accounts_df: pd.DataFrame, agencies_df: pd.DataFrame) -> pd.DataFrame:
     """Analisa o crescimento acumulado de contas abertas ao longo dos anos, segmentado por tipo de agência e tipo de conta. """
 
