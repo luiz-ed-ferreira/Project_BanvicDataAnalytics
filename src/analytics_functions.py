@@ -24,6 +24,44 @@ def analyze_transaction_volume_by_type(transactions_df: pd.DataFrame) -> pd.Data
 
 #----------------------------------------------------------------------------
 
+#Função que calcula a quantidade de novos clientes por ano, considerando o ano de abertura da primeira conta de cada cliente. 
+def analyze_new_customers_by_year(accounts_df: pd.DataFrame) -> pd.DataFrame:
+    """ Calcula a quantidade de novos clientes por ano e % de de crescimento anual, considerando o ano de abertura da primeira conta de cada cliente. """
+    new_customers = (
+        accounts_df
+        .assign(
+            account_opening_year=lambda df: (
+                df["data_abertura"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+        .groupby("cod_cliente")
+        .agg(
+            first_account_year=("account_opening_year", "min")
+        )
+        .reset_index()
+        .groupby("first_account_year")
+        .agg(
+            new_customers=("cod_cliente", "nunique")
+        )
+        .reset_index()
+        .rename(
+            columns={"first_account_year": "year"}
+        )
+        .sort_values("year")
+    )
+
+    new_customers["growth_percentage"] = (
+        new_customers["new_customers"]
+        .pct_change()
+        .mul(100)
+    )
+
+    return new_customers
+
+#----------------------------------------------------------------------------
+
 #Função que classifica clientes ativos (pelo menos 1 transação) e clientes inativos (sem transações) em 2022
 def analyze_customer_activity_2022(customers_df: pd.DataFrame,transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
     """ Classifica os clientes como ativos ou sem transações em 2022 (pedido para analise do time comercial). """
@@ -75,10 +113,27 @@ def analyze_customer_activity_2022(customers_df: pd.DataFrame,transactions_df: p
 #Função analisa a tendência de inatividade anual dos clientes
 def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
     """
-        Analisa a atividade anual dos clientes.
-        Classifica cada cliente como ativo ou sem transações em cada ano disponível na base de transações.
+        Analisa a atividade anual dos clientes considerando apenas os clientes que já possuíam uma conta aberta no respectivo ano.
+
+        Um cliente é classificado como:
+        - Ativo: realizou pelo menos uma transação no ano
+        - Sem transações: possuía uma conta aberta no ano, mas não realizou nenhuma transação durante o período
+
     """
-    transaction_data = (
+    accounts = (
+        accounts_df[
+            ["num_conta", "cod_cliente", "data_abertura"]
+        ]
+        .assign(
+            account_opening_year=lambda df: (
+                df["data_abertura"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+    )
+
+    transactions = (
         transactions_df
         .assign(
             transaction_year=lambda df: (
@@ -88,7 +143,7 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
             )
         )
         .merge(
-            accounts_df[["num_conta", "cod_cliente"]],
+            accounts[["num_conta", "cod_cliente"]],
             on="num_conta",
             how="left"
         )
@@ -97,46 +152,78 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
         .drop_duplicates()
     )
 
-    years = sorted(transaction_data["transaction_year"].unique())
+    years = sorted(
+        set(accounts["account_opening_year"].dropna().unique())
+        | set(transactions["transaction_year"].dropna().unique())
+    )
 
     customer_year = (
-        pd.MultiIndex.from_product(
-            [customers_df["cod_cliente"], years],
-            names=["cod_cliente", "transaction_year"]
+        customers_df[["cod_cliente"]]
+        .assign(key=1)
+        .merge(
+            pd.DataFrame({"transaction_year": years, "key": 1}),
+            on="key"
         )
-        .to_frame(index=False)
+        .drop(columns="key")
+        .merge(
+            accounts[
+                ["cod_cliente", "account_opening_year"]
+            ],
+            on="cod_cliente",
+            how="left"
+        )
+    )
+
+    customer_year["eligible"] = (
+        customer_year["account_opening_year"]
+        <= customer_year["transaction_year"]
+    )
+
+    active_customers = transactions.rename(
+        columns={"transaction_year": "activity_year"}
+    )
+
+    customer_year = (
+        customer_year
+        .merge(
+            active_customers.assign(is_active=True),
+            left_on=["cod_cliente", "transaction_year"],
+            right_on=["cod_cliente", "activity_year"],
+            how="left"
+        )
     )
 
     customer_year["is_active"] = (
-        customer_year
-        .merge(
-            transaction_data.assign(is_active=True),
-            on=["cod_cliente", "transaction_year"],
-            how="left"
-        )["is_active"]
+        customer_year["is_active"]
         .fillna(False)
     )
 
     activity_by_year = (
-        customer_year
+        customer_year[
+            customer_year["eligible"]
+        ]
         .assign(
             activity_status=lambda df: df["is_active"].map({
                 True: "Active",
                 False: "No transactions"
             })
         )
-        .groupby(["transaction_year", "activity_status"])
+        .groupby(
+            ["transaction_year", "activity_status"]
+        )
         .agg(
-            customer_count=("cod_cliente", "count")
+            customer_count=("cod_cliente", "nunique")
         )
         .reset_index()
     )
 
-    activity_by_year["percentage"] = round((
+    activity_by_year["percentage"] = (
         activity_by_year["customer_count"]
-        / len(customers_df)
+        / activity_by_year.groupby("transaction_year")[
+            "customer_count"
+        ].transform("sum")
         * 100
-    ),2)
+    )
 
     return activity_by_year
 

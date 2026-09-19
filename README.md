@@ -52,6 +52,23 @@ However, during the December 2022 transaction peak, digital branches recorded mo
 
 ![alt text](img/image_branch.png)
 
+> 📈 Activities and growth in the number of clients per year
+
+BanVic shows a consistent positive growth in the customer base throughout the analyzed period, with the exception of 2020. 
+
+The decrease in 2020 was negligible, representing a reduction of only 1 customer compared to 2019 (less than 1%). This isolated decline coincides with the COVID-19 pandemic period and may be a contextual factor worth considering when interpreting the result. However, the available data does not establish a causal relationship.
+
+![alt text](img/image_customer_by_year.png)
+
+From 2013 to 2020, the number of active and inactive customers followed similar trends, with active customers consistently representing the larger share of the customer base.
+
+During this period, the proportion of active customers gradually declined, reaching 58.7% in 2020. A relevant shift in customer behavior becomes evident from 2020 to 2022.
+
+Customer activity recovered significantly from 2021 onwards, increasing from 58.7% in 2020 to 66.2% in 2021 and reaching 78.4% in 2022.
+This recovery indicates a substantial improvement in the transactional engagement level of the customer base during the most recent complete years analyzed.
+
+![alt text](img/image_active.png)
+
 > 📈 Transaction Peak Analysis — December 2022
 
 - A transaction volume anomaly was identified in December 2022, with 80.7% of transactions occurring on December 29–30.
