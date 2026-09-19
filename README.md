@@ -19,13 +19,13 @@ Attention! Please note that this notebook is partially written in Brazilian Port
 
 In Progress  [developing]
 
-- [x] Data quality + preparation
-- [x] EDA + insights
-- [x] Data loading in PostgreSQL
+- [x] Data quality + preparation -> notebooks/main_analyses.ipynb
+- [x] EDA + insights -> notebooks/main_analyses.ipynb
+- [x] Data loading in PostgreSQL -> notebooks/loading_database.ipynb
 - [ ] KPIs + business questions
 - [ ] Dashboard mockup
 - [ ] Dashboard development
-- [ ] Business rules documentation / recommendations
+- [ ] Business rules documentation
 - [ ] Final presentation
 
 ### Data quality observations
