@@ -52,7 +52,7 @@ However, during the December 2022 transaction peak, digital branches recorded mo
 
 ![alt text](img/image_branch.png)
 
-> 📈 Activities and growth in the number of clients per year
+> 📈 Activities and Growth in the number of customers per year
 
 BanVic shows a consistent positive growth in the customer base throughout the analyzed period, with the exception of 2020. 
 
@@ -68,6 +68,20 @@ Customer activity recovered significantly from 2021 onwards, increasing from 58.
 This recovery indicates a substantial improvement in the transactional engagement level of the customer base during the most recent complete years analyzed.
 
 ![alt text](img/image_active.png)
+
+> ❌ Customer Churn — Transactional Retention
+
+Customer churn remained relatively high throughout most of the analyzed period, ranging from 24.0% to 41.9% between 2011 and 2020.
+
+The highest churn rate was observed in 2012 (41.9%), while 2020 recorded a churn rate of 37.2%. A significant reduction in churn occurred from 2021 onwards, falling to 25.2% in 2021 and 10.7% in 2022.
+
+Between 2020 and 2022, the churn rate decreased by approximately 26.5 percentage points, coinciding with the increase in the customer activity rate previously identified.
+
+This pattern indicates a substantial improvement in customer transactional retention in the most recent complete years analyzed.
+
+**Note:** Adoption churn rate (%) = (inactive customers in the current year / active customers in the previous year) * 100
+
+![alt text](img/image_churn_rate.png)
 
 > 📈 Transaction Peak Analysis — December 2022
 

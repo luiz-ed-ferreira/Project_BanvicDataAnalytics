@@ -1,5 +1,6 @@
 #Importando as bibliotecas necessárias
 import pandas as pd
+import numpy as np
 
 #----------------------------------------------------------------------------
 
@@ -110,16 +111,21 @@ def analyze_customer_activity_2022(customers_df: pd.DataFrame,transactions_df: p
 
 #----------------------------------------------------------------------------
 
-#Função analisa a tendência de inatividade anual dos clientes
+#Função analisa a tendência de inatividade anual dos clientes e taxa de churn
 def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
     """
-        Analisa a atividade anual dos clientes considerando apenas os clientes que já possuíam uma conta aberta no respectivo ano.
+    Analisa a atividade anual dos clientes e calcula o churn rate.
 
-        Um cliente é classificado como:
-        - Ativo: realizou pelo menos uma transação no ano
-        - Sem transações: possuía uma conta aberta no ano, mas não realizou nenhuma transação durante o período
+    Um cliente é classificado como:
+    - Active: realizou pelo menos uma transação no ano.
+    - No transactions: possuía uma conta aberta no ano, mas não realizou
+      nenhuma transação durante o período.
+    - Churned: estava ativo no ano anterior e deixou de realizar transações
+      no ano atual.
 
+    O churn rate é calculado sobre os clientes ativos no ano anterior.
     """
+
     accounts = (
         accounts_df[
             ["num_conta", "cod_cliente", "data_abertura"]
@@ -130,6 +136,17 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
                 .dt.tz_localize(None)
                 .dt.year
             )
+        )
+    )
+
+    #Define o primeiro ano de abertura de conta para cada cliente
+    customer_opening_year = (
+        accounts[
+            ["cod_cliente", "account_opening_year"]
+        ]
+        .groupby("cod_cliente", as_index=False)
+        .agg(
+            account_opening_year=("account_opening_year", "min")
         )
     )
 
@@ -153,7 +170,7 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
     )
 
     years = sorted(
-        set(accounts["account_opening_year"].dropna().unique())
+        set(customer_opening_year["account_opening_year"].dropna().unique())
         | set(transactions["transaction_year"].dropna().unique())
     )
 
@@ -161,19 +178,21 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
         customers_df[["cod_cliente"]]
         .assign(key=1)
         .merge(
-            pd.DataFrame({"transaction_year": years, "key": 1}),
+            pd.DataFrame({
+                "transaction_year": years,
+                "key": 1
+            }),
             on="key"
         )
         .drop(columns="key")
         .merge(
-            accounts[
-                ["cod_cliente", "account_opening_year"]
-            ],
+            customer_opening_year,
             on="cod_cliente",
             how="left"
         )
     )
 
+    #Cliente já possuía uma conta aberta naquele ano
     customer_year["eligible"] = (
         customer_year["account_opening_year"]
         <= customer_year["transaction_year"]
@@ -193,21 +212,45 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
         )
     )
 
+    #True quando o cliente realizou pelo menos uma transação naquele ano
     customer_year["is_active"] = (
         customer_year["is_active"]
         .fillna(False)
     )
 
+    customer_year = customer_year[
+        customer_year["eligible"]
+    ].copy()
+
+    #Status de atividade
+    customer_year["activity_status"] = customer_year[
+        "is_active"
+    ].map({
+        True: "Active",
+        False: "No transactions"
+    })
+
+    #Atividade do ano anterior
+    customer_year = customer_year.sort_values(
+        ["cod_cliente", "transaction_year"]
+    )
+
+    customer_year["previous_year_active"] = (
+        customer_year
+        .groupby("cod_cliente")["is_active"]
+        .shift(1)
+        .fillna(False)
+    )
+
+    #Cliente ativo no ano anterior que deixou de estar ativo
+    customer_year["is_churned"] = (
+        customer_year["previous_year_active"]
+        & ~customer_year["is_active"]
+    )
+
+    #Indicadores anuais
     activity_by_year = (
-        customer_year[
-            customer_year["eligible"]
-        ]
-        .assign(
-            activity_status=lambda df: df["is_active"].map({
-                True: "Active",
-                False: "No transactions"
-            })
-        )
+        customer_year
         .groupby(
             ["transaction_year", "activity_status"]
         )
@@ -225,7 +268,40 @@ def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_d
         * 100
     )
 
-    return activity_by_year
+    #Churn anual
+    #previous_active_customers -> quantos clientes estavam ativos anteriormente;
+    #churned_customers -> quantos desses deixaram de estar ativos.
+    churn_by_year = (
+        customer_year
+        .groupby("transaction_year")
+        .agg(
+            previous_active_customers=(
+                "previous_year_active",
+                "sum"
+            ),
+            churned_customers=(
+                "is_churned",
+                "sum"
+            )
+        )
+        .reset_index()
+    )
+
+    churn_by_year["churn_rate"] = (
+        churn_by_year["churned_customers"]
+        .div(
+            churn_by_year["previous_active_customers"].replace(0, np.nan)
+        )
+        * 100
+    )
+
+    #O primeiro ano não possui período anterior para comparação
+    churn_by_year.loc[
+        churn_by_year["previous_active_customers"] == 0,
+        "churn_rate"
+    ] = None
+
+    return activity_by_year, churn_by_year
 
 #----------------------------------------------------------------------------
 
