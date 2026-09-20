@@ -114,16 +114,16 @@ def analyze_customer_activity_2022(customers_df: pd.DataFrame,transactions_df: p
 #Função analisa a tendência de inatividade anual dos clientes e taxa de churn
 def analyze_customer_activity_by_year(customers_df: pd.DataFrame, transactions_df: pd.DataFrame,accounts_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Analisa a atividade anual dos clientes e calcula o churn rate.
+        Analisa a atividade anual dos clientes e calcula o churn rate
 
-    Um cliente é classificado como:
-    - Active: realizou pelo menos uma transação no ano.
-    - No transactions: possuía uma conta aberta no ano, mas não realizou
-      nenhuma transação durante o período.
-    - Churned: estava ativo no ano anterior e deixou de realizar transações
-      no ano atual.
+        Um cliente é classificado como:
+        - Active: realizou pelo menos uma transação no ano
+        - No transactions: possuía uma conta aberta no ano, mas não realizou
+        nenhuma transação durante o período
+        - Churned: estava ativo no ano anterior e deixou de realizar transações
+        no ano atual
 
-    O churn rate é calculado sobre os clientes ativos no ano anterior.
+        O churn rate adotado é calculado sobre os clientes ativos no ano anterior
     """
 
     accounts = (
