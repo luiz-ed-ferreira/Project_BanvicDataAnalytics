@@ -549,3 +549,117 @@ def prepare_pix_evolution(transaction_profile_df: pd.DataFrame) -> pd.DataFrame:
     return pix_evolution
 
 #----------------------------------------------------------------------------
+
+#Função que analisa a quantidade de propostas de crédito por ano e status
+def analyze_credit_proposals_by_status(credit_proposals_df: pd.DataFrame) -> pd.DataFrame:
+    """ Analisa a quantidade de propostas de crédito por ano e status. """
+    credit_proposals = (
+        credit_proposals_df
+        .assign(
+            proposal_year=lambda df: (
+                df["data_entrada_proposta"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+        .groupby(["proposal_year", "status_proposta"])
+        .agg(
+            proposal_count=("cod_proposta", "count")
+        )
+        .reset_index()
+        .sort_values(
+            ["proposal_year", "proposal_count"],
+            ascending=[True, False]
+        )
+    )
+
+    return credit_proposals
+
+#----------------------------------------------------------------------------
+
+#Função que calcula a taxa anual de aprovação das propostas de crédito
+def analyze_credit_approval_rate(credit_proposals_df: pd.DataFrame) -> pd.DataFrame:
+    """ Calcula a taxa anual de aprovação das propostas de crédito. """
+    approval_rate = (
+        credit_proposals_df
+        .groupby("proposal_year")
+        .agg(
+            total_proposals=("proposal_count", "sum"),
+            approved_proposals=(
+                "proposal_count",
+                lambda x: x[
+                    credit_proposals_df.loc[x.index, "status_proposta"]
+                    == "Aprovada"
+                ].sum()
+            )
+        )
+        .reset_index()
+    )
+
+    approval_rate["approval_rate"] = (
+        approval_rate["approved_proposals"]
+        .div(approval_rate["total_proposals"])
+        .mul(100)
+    )
+
+    return approval_rate
+
+#----------------------------------------------------------------------------
+
+#Função que calcula o valor médio das propostas e a taxa de juros média, segmentados por ano e status da proposta
+def analyze_credit_proposal_values(credit_proposals_df: pd.DataFrame) -> pd.DataFrame:
+    """
+        Calcula o valor médio das propostas e a taxa de juros média,
+        segmentados por ano e status da proposta.
+
+        Também adiciona uma linha de total para cada status,
+        considerando todo o período analisado.
+    """
+    proposal_data = (
+        credit_proposals_df
+        .assign(
+            proposal_year=lambda df: (
+                df["data_entrada_proposta"]
+                .dt.tz_localize(None)
+                .dt.year
+            )
+        )
+        .groupby(
+            ["proposal_year", "status_proposta"]
+        )
+        .agg(
+            proposal_count=("cod_proposta", "count"),
+            average_proposal_value=("valor_proposta", "mean"),
+            average_monthly_interest_rate=(
+                "taxa_juros_mensal",
+                "mean"
+            )
+        )
+        .reset_index()
+    )
+
+    total_data = (
+        credit_proposals_df
+        .groupby("status_proposta")
+        .agg(
+            proposal_count=("cod_proposta", "count"),
+            average_proposal_value=("valor_proposta", "mean"),
+            average_monthly_interest_rate=(
+                "taxa_juros_mensal",
+                "mean"
+            )
+        )
+        .reset_index()
+        .assign(proposal_year="Total")
+    )
+
+    result = pd.concat(
+        [proposal_data, total_data],
+        ignore_index=True
+    )
+
+    return result.sort_values(
+        ["proposal_year", "status_proposta"]
+    ).reset_index(drop=True)
+
+#----------------------------------------------------------------------------

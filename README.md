@@ -105,6 +105,14 @@ This pattern indicates a substantial improvement in customer transactional reten
 
 ![alt text](img/image_pix.png)
 
+> 📈 Credit Proposal Analysis
+
+The approval rate remained relatively stable for most of the period, ranging from ~22% to 31.6%, with a notable drop to 16.4% in 2017 and a peak of 31.6% in 2022. However, the proposal statuses show an unusually uniform distribution, without the expected funnel effect of a sequential credit process. In several years, approved proposals even exceed submitted proposals, suggesting that statuses may represent current or independent states rather than sequential stages. Therefore, the data should be interpreted with caution when evaluating stage-by-stage conversion.
+
+![alt text](img/image_credit_rate.png)
+
+Credit proposals show a highly uniform profile across all statuses. Average proposal values range from R$ 81k to R$ 86k, while average monthly interest rates remain between 1.64% and 1.70%. No strong relationship was identified between proposal value, interest rate, and proposal status, suggesting that other factors not available in the dataset may drive approval outcomes.
+
 ### Prerequisites & used softwares
 
 - WSL Linux/Ubuntu for Windows 11 System
