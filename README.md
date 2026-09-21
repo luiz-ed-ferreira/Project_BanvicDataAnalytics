@@ -21,12 +21,27 @@ In Progress  [developing]
 
 - [x] Data quality + preparation -> notebooks/main_analyses.ipynb
 - [x] EDA + insights -> notebooks/main_analyses.ipynb
+- [x] KPIs summary
 - [x] Data loading in PostgreSQL -> notebooks/loading_database.ipynb
-- [ ] KPIs + business questions
 - [ ] Dashboard mockup
 - [ ] Dashboard development
 - [ ] Business rules documentation
 - [ ] Final presentation
+
+### KPIs summary
+
+| Area                 | KPI / Analysis                                   | Goal                                                                   |
+| -------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
+| Digital Adoption     | **Digital vs. Physical Branches**                | Track the evolution and adoption of the digital channel                |
+| Customer Acquisition | **New Customers per Year**                       | Monitor new customer acquisition over time                             |
+| Customer Engagement  | **Active vs. Inactive Customers**                | Assess the activity level of the customer base                         |
+| Customer Retention   | **Churn Rate**                                   | Monitor customer churn and inactivity over time                        |
+| Transactions         | **Transaction Types — Overview**                 | Identify the main transaction types                                    |
+| Transactions         | **Transaction Evolution — Overview**             | Track transaction volume evolution over time                           |
+| Digital Adoption     | **Transaction Evolution — Digital vs. Physical** | Compare transactional activity across digital and physical channels    |
+| Digital Adoption     | **Transaction Evolution — PIX Adoption**         | Track the evolution and adoption of PIX transactions                   |
+| Credit               | **Credit Proposal Trend & Status**               | Assess credit proposal volume, status distribution, and approval rates |
+
 
 ### Data quality observations
 
