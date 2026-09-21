@@ -4,7 +4,7 @@
 
 A project developed as part of the final assessment process for Indicium AI's Data Analytics training program, based on a fictional bank case for BanVic. The project involved data analysis, identification of improvement opportunities, and the application of continuous improvement concepts to support decision-making, using Python and SQL.
 
-Attention! Please note that this notebook is partially written in Brazilian Portuguese, as it was developed as a test project to evaluate my skills as part of the Indicium AI's Data Analytics certification.
+> Attention! Please note that this notebook is partially written in Brazilian Portuguese, as it was developed as a test project to evaluate my skills as part of the Indicium AI's Data Analytics certification.
 
 ### Criterion
 
@@ -23,7 +23,7 @@ In Progress  [developing]
 - [x] EDA + insights -> notebooks/main_analyses.ipynb
 - [x] KPIs summary
 - [x] Data loading in PostgreSQL -> notebooks/loading_database.ipynb
-- [ ] Dashboard mockup
+- [x] Dashboard mockup
 - [ ] Dashboard development
 - [ ] Business rules documentation
 - [ ] Final presentation
@@ -36,12 +36,19 @@ In Progress  [developing]
 | Customer Acquisition | **New Customers per Year**                       | Monitor new customer acquisition over time                             |
 | Customer Engagement  | **Active vs. Inactive Customers**                | Assess the activity level of the customer base                         |
 | Customer Retention   | **Churn Rate**                                   | Monitor customer churn and inactivity over time                        |
+| Transactions         | **Average transaction value**                    | Monitor the average transaction value                                  |
 | Transactions         | **Transaction Types — Overview**                 | Identify the main transaction types                                    |
 | Transactions         | **Transaction Evolution — Overview**             | Track transaction volume evolution over time                           |
 | Digital Adoption     | **Transaction Evolution — Digital vs. Physical** | Compare transactional activity across digital and physical channels    |
 | Digital Adoption     | **Transaction Evolution — PIX Adoption**         | Track the evolution and adoption of PIX transactions                   |
 | Credit               | **Credit Proposal Trend & Status**               | Assess credit proposal volume, status distribution, and approval rates |
 
+
+### Mockup
+
+![alt text](img/mockup.png)
+
+> Attention! This is not the final result. Generated with AI-assisted Figma.
 
 ### Data quality observations
 
