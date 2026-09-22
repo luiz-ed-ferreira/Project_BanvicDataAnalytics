@@ -35,7 +35,7 @@ In Progress  [developing]
 | Digital Adoption     | **Cumlative Digital vs. Physical Branches per year** | Monitor cumulative annual new account adoption by branch type over time |
 | Digital Adoption     | **Transaction Evolution — PIX Adoption**             | Track the evolution and adoption of PIX transactions                    |
 | Customer Acquisition | **New Customers per Year**                           | Monitor new customer acquisition over time                              |
-| Customer Engagement  | **Active vs. Inactive Customers**                    | Assess the activity level of the customer base                          |
+| Customer Engagement  | **Active vs. Inactive Customers per year**           | Assess the activity level of the customer base per year                 |
 | Customer Retention   | **Churn Rate**                                       | Monitor customer churn and inactivity over time                         |
 | Transactions         | **Average transaction value**                        | Monitor the average transaction value                                   |
 | Transactions         | **Transaction Evolution — Overview**                 | Track number of transaction evolution over time                         |
