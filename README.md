@@ -17,7 +17,7 @@
 
 ### Status & improvements
 
-In Progress  [developing]
+Completed [developing]
 
 - [x] Data quality + preparation -> notebooks/main_analyses.ipynb
 - [x] EDA + insights -> notebooks/main_analyses.ipynb
