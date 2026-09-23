@@ -26,8 +26,8 @@ In Progress  [developing]
 - [x] Dashboard mockup -> notebooks/main_analyses.ipynb
 - [x] Dashboard development -> dashboards/dashboard_Banvic_Bank.pbix
 - [x] Dashboard description and storytelling -> docs/Desafio Indicium AI - BanVic Dashboard e Storytelling - Luiz Eduardo Ferreira.docx
-- [ ] Business rules documentation 
-- [ ] Final presentation
+- [x] Business rules documentation -> docs/Desafio Indicium AI - BanVic Regras de Negócio - Luiz Eduardo Ferreira.docx
+- [x] Final presentation -> docs/Desafio Indicium AI - BanVic Apresentação Final - Luiz Eduardo Ferreira.pptx
 
 ### KPIs summary
 
