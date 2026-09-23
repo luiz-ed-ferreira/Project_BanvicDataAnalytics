@@ -25,7 +25,8 @@ In Progress  [developing]
 - [x] Data loading in PostgreSQL -> notebooks/loading_database.ipynb
 - [x] Dashboard mockup -> notebooks/main_analyses.ipynb
 - [x] Dashboard development -> dashboards/dashboard_Banvic_Bank.pbix
-- [ ] Business rules documentation
+- [x] Dashboard description and storytelling -> docs/Desafio Indicium AI - BanVic Dashboard e Storytelling - Luiz Eduardo Ferreira.docx
+- [ ] Business rules documentation 
 - [ ] Final presentation
 
 ### KPIs summary
