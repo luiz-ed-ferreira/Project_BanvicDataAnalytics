@@ -185,6 +185,7 @@ The pipeline follows the architecture below:
 - PostgreSQL version 18.6
 - Power BI version 2.157.879
 - Figma account
+- Apache Airflow 3.3.2
 
 > Attention! Consult the requirements.txt file for more information about python libraries used.
 
