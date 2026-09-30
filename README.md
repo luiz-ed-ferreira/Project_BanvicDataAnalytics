@@ -176,6 +176,7 @@ The pipeline follows the architecture below:
                               │
                               ▼
                            Power BI
+```
 
 ### Prerequisites & used softwares
 
