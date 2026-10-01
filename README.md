@@ -133,13 +133,13 @@ The approval rate remained relatively stable for most of the period, ranging fro
 
 Credit proposals show a highly uniform profile across all statuses. Average proposal values range from R$ 81k to R$ 86k, while average monthly interest rates remain between 1.64% and 1.70%. No strong relationship was identified between proposal value, interest rate, and proposal status, suggesting that other factors not available in the dataset may drive approval outcomes.
 
-### 🔄 Data Pipeline & Orchestration
+### Data pipeline & orchestration
 
 To improve the automation, reproducibility, and reliability of the data workflow, the BanVic ETL process was orchestrated using **Apache Airflow** running in a **Docker** environment.
 
 Instead of implementing the transformation logic directly inside Airflow, the DAG orchestrates the existing Python modules developed for the project. This approach keeps the responsibilities separated: **Python and Pandas handle the data processing logic, PostgreSQL stores the structured data, and Apache Airflow manages the execution flow, dependencies, monitoring, and logs.**
 
-### 🏗️ Pipeline Architecture
+### Pipeline architecture
 
 The pipeline follows the architecture below:
 
