@@ -1,6 +1,6 @@
 # Project BanVic Bank - Indicium AI's Data Analytics Certification
 
-### Project overview
+### Project Overview
 
 > A project developed as part of the final assessment process for Indicium AI's Data Analytics training program, based on a fictional bank case for BanVic. The project involved data analysis, identification of improvement opportunities, and the application of continuous improvement concepts to support decision-making, using Python and SQL.
 
@@ -15,7 +15,7 @@
 - Recommendations: translate insights into concrete actions, including demonstrating the value of a data-driven
 - Presentation: complete story: problem -> data -> analysis -> discovery -> decision
 
-### Status & improvements
+### Status & Improvements
 
 Completed [approved]
 
@@ -29,7 +29,7 @@ Completed [approved]
 - [x] Business rules documentation -> docs/Desafio Indicium AI - BanVic Regras de Negócio - Luiz Eduardo Ferreira.docx
 - [x] Final presentation -> docs/Desafio Indicium AI - BanVic Apresentação Final - Luiz Eduardo Ferreira.pptx
 
-### KPIs summary
+### KPIs Summary
 
 | Area                 | KPI / Analysis                                       | Goal                                                                    |
 | -------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -48,7 +48,7 @@ Completed [approved]
 
 > Attention! This is not the final result. Generated with AI-assisted Figma.
 
-### Data quality observations
+### Data Quality Observations
 
 > ⚠️ Data Anomaly — Account 528 without customer association
 
@@ -58,7 +58,7 @@ Completed [approved]
 
 - Treatment: The record was not removed or modified. It will be retained and flagged as a data anomaly in the dataset through the creation of a new column.
 
-### EDA insights
+### EDA Insights
 
 > 🏦 Digital Branch Adoption — August 2015
 
@@ -133,18 +133,18 @@ The approval rate remained relatively stable for most of the period, ranging fro
 
 Credit proposals show a highly uniform profile across all statuses. Average proposal values range from R$ 81k to R$ 86k, while average monthly interest rates remain between 1.64% and 1.70%. No strong relationship was identified between proposal value, interest rate, and proposal status, suggesting that other factors not available in the dataset may drive approval outcomes.
 
-### Data pipeline & orchestration
+### Data Pipeline & Orchestration
 
 To improve the automation, reproducibility, and reliability of the data workflow, the BanVic ETL process was orchestrated using **Apache Airflow** running in a **Docker** environment.
 
 Instead of implementing the transformation logic directly inside Airflow, the DAG orchestrates the existing Python modules developed for the project. This approach keeps the responsibilities separated: **Python and Pandas handle the data processing logic, PostgreSQL stores the structured data, and Apache Airflow manages the execution flow, dependencies, monitoring, and logs.**
 
-### Pipeline architecture
+### Pipeline Architecture
 
 The pipeline follows the architecture below:
 
 ```text
-                         Apache Airflow
+                       Apache Airflow
                               │
                               ▼
                       Raw CSV Datasets
@@ -175,10 +175,10 @@ The pipeline follows the architecture below:
                       (Banvic_bank_db)
                               │
                               ▼
-                           Power BI
+                          Power BI
 ```
 
-### Prerequisites & used softwares
+### Prerequisites & Softwares
 
 - WSL Linux/Ubuntu for Windows 11 System
 - Python version 3.12.3
