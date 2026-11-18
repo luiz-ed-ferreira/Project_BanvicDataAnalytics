@@ -3,7 +3,7 @@
 ### Project Overview
 
 <p align="center">
-  <img src="img/banvic_icon.png" alt="Banvic Bank">
+  <img src="img/banvic_icon.png" alt="Banvic Bank" height="200" weight="300">
 </p>
 
 > A project developed as part of the final assessment process for Indicium AI's Data Analytics training program, based on a fictional bank case for BanVic. The project involved data analysis, identification of improvement opportunities, and the application of continuous improvement concepts to support decision-making, using Python and SQL.
